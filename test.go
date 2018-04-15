@@ -1,23 +1,23 @@
 package main
 
 import (
-	"testing"
 	"log"
 	"net"
+	"testing"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	ser "github.com/mingkaic/go_tenncor/serial"
 	pb "github.com/mingkaic/go_tenncor/graphmgr"
+	ser "github.com/mingkaic/go_tenncor/serial"
 )
 
 const (
-	port = ":50051"
-	address     = "localhost:50051"
+	port    = ":50051"
+	address = "localhost:50051"
 )
 
-type Server struct {}
+type Server struct{}
 
 func (s *Server) PostGraph(ctx context.Context, in *pb.GraphCreated) (*pb.Nothing, error) {
 	return &pb.Nothing{}, nil
@@ -36,9 +36,9 @@ func (s *Server) GetGraphPb(ctx context.Context, in *pb.GraphReq) (*ser.GraphPb,
 	nodeMap["B"] = &ser.NodePb{}
 	nodeMap["C"] = &ser.NodePb{}
 	return &ser.GraphPb{
-		Gid: "sample",
+		Gid:         "sample",
 		CreateOrder: createOrder,
-		NodeMap: nodeMap,
+		NodeMap:     nodeMap,
 	}, nil
 }
 
