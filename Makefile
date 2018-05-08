@@ -9,4 +9,4 @@ graphmgr:
 	bazel build //graphmgr:go_default_library
 
 test: proto
-	bazel test //:test
+	bazel test --test_output=all //:test

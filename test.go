@@ -23,6 +23,10 @@ func (s *Server) PostGraph(ctx context.Context, in *pb.GraphCreated) (*pb.Nothin
 	return &pb.Nothing{}, nil
 }
 
+func (s *Server) PostData(ctx context.Context, in *pb.DataCreated) (*pb.Nothing, error) {
+	return &pb.Nothing{}, nil
+}
+
 func (s *Server) GetGraphList(ctx context.Context, in *pb.GraphListReq) (*pb.GraphList, error) {
 	return &pb.GraphList{
 		Gids: []string{"sample"},
@@ -71,7 +75,28 @@ func TestClient(t *testing.T) {
 	defer conn.Close()
 	c := pb.NewGraphmgrClient(conn)
 	_, err = c.PostGraph(context.Background(), &pb.GraphCreated{
-		Gid: "sample2",
+		Graph: &ser.GraphPb{
+			Gid: "sample_graphid",
+			CreateOrder: []string{
+				"nodeId1",
+				"nodeId2",
+				"nodeId3",
+			},
+			NodeMap: map[string]*ser.NodePb{
+				"nodeId1": &ser.NodePb{
+					Type:  ser.NodePb_VARIABLE,
+					Label: "A",
+				},
+				"nodeId2": &ser.NodePb{
+					Type:  ser.NodePb_VARIABLE,
+					Label: "B",
+				},
+				"nodeId3": &ser.NodePb{
+					Type:  ser.NodePb_FUNCTOR,
+					Label: "C",
+				},
+			},
+		},
 	})
 	if err != nil {
 		log.Fatalf("could notify graph creation: %v", err)

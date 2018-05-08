@@ -6,7 +6,7 @@ def dependencies():
         git_repository(
             name = "com_github_mingkaic_tenncor",
             remote = "https://github.com/mingkaic/tenncor",
-            commit = "efb8c7903b9aaef08360ed0302250c0c591f7c81",
+            commit = "30c44662f261279e8e6b0feec5de1a13d0963acd",
         )
 
     if "io_bazel_rules_go" not in native.existing_rules():
